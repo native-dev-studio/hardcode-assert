@@ -1,0 +1,53 @@
+const assert = require('assert');
+
+/// Move me to package
+let _tests = [];
+
+const it = (fn) => {
+  _tests.push(fn);
+}
+
+const tests = {
+  dispatch() {
+    const serialized = JSON.stringify(tests.run());
+    console.log(serialized);
+  },
+
+  run() {
+    for (const test of _tests) {
+      try {
+        test();
+      } catch (e) {
+        if (e instanceof assert.AssertionError) {
+          switch (typeof e.expected) {
+            case 'boolean':
+              return {
+                isSuccess: false,
+                message: e.actual.toString()
+              }
+            default:
+              return {
+                isSuccess: false,
+                message: e.message
+              }
+          }
+        }
+        return {
+          isSuccess: false,
+          message: `${e.name}: ${e.message}`
+        }
+      }
+    }
+
+    return {
+      isSuccess: true,
+      message: "true"
+    }
+  }
+}
+
+module.exports = {
+  it,
+  tests,
+  assert,
+}
