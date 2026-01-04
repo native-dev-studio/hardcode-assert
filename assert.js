@@ -7,6 +7,10 @@ const it = (fn) => {
   _tests.push(fn);
 }
 
+const strip = (s) => {
+  return s.replace(/\n+/g, ' ').replace(/\s+/g, ' ')
+}
+
 const tests = {
   dispatch() {
     const serialized = JSON.stringify(tests.run());
@@ -28,13 +32,13 @@ const tests = {
             default:
               return {
                 isSuccess: false,
-                message: e.message
+                message: strip(e.message)
               }
           }
         }
         return {
           isSuccess: false,
-          message: `${e.name}: ${e.message}`
+          message: `${e.name}: ${strip(e.message)}`
         }
       }
     }
