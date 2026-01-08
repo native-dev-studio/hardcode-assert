@@ -22,7 +22,7 @@ const tests = {
       try {
         test();
       } catch (e) {
-        if (e instanceof assert.AssertionError) {
+        if (e instanceof hassert.AssertionError) {
           switch (typeof e.expected) {
             case 'boolean':
               return {
@@ -50,8 +50,27 @@ const tests = {
   }
 }
 
+const hassert = {
+  equal(arr, expected, message) {
+    const [f, ...args] = arr;
+    const actual = f(args);
+    const defaultMessage = `Expected \`${f.name}(${args}) == ${expected}\`, not \`${actual}\``;
+
+    assert.equal(actual, expected, message || defaultMessage);
+  },
+
+  deepEqual(arr, expected, message) {
+    const [f, ...args] = arr;
+    const actual = f(args);
+    const defaultMessage = `Expected \`${f.name}(${args}) == ${expected}\`, not \`${actual}\``;
+
+    assert.deepEqual(f(args), expected, message || defaultMessage);
+  }
+}
+
 module.exports = {
   it,
   tests,
-  assert,
+  hassert,
+  assert
 }
