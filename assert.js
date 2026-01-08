@@ -57,6 +57,8 @@ const hassert = {
     const defaultMessage = `Expected \`${f.name}(${args}) == ${expected}\`, not \`${actual}\``;
 
     assert.equal(actual, expected, message || defaultMessage);
+
+    return actual;
   },
 
   deepEqual(arr, expected, message) {
@@ -65,6 +67,8 @@ const hassert = {
     const defaultMessage = `Expected \`${f.name}(${args}) == ${expected}\`, not \`${actual}\``;
 
     assert.deepEqual(f(args), expected, message || defaultMessage);
+
+    return actual;
   }
 }
 
