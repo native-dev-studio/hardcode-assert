@@ -22,7 +22,7 @@ const tests = {
       try {
         test();
       } catch (e) {
-        if (e instanceof hassert.AssertionError) {
+        if (e instanceof assert.AssertionError) {
           switch (typeof e.expected) {
             case 'boolean':
               return {
